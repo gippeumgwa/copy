@@ -3,7 +3,9 @@ import os
 import random
 import subprocess
 import tempfile
-import time
+import datetime
+import hashlib
+import requests
 
 # follows tasks done by NewDockerReplicaBase
 
@@ -44,10 +46,20 @@ gh = [
 for num in [random.randint(1, 3100) for x in range(5)]:
     print(num)
     gh_name = gh[max(num - 1, 0) // 500]
-    dest = "%s/%s-%d:v2-%d-%s" % (
+    r = requests.get('https://github.com/%s/%s-%d/raw/master/manifest' % (gh_name, prefix, num))
+    if r.status_code != 200:
+        print('Status code %d' % r.status_code)
+        manifest_hash = '0000000000000000000000000000000000000000000000000000000000000000'
+    else:
+        m = hashlib.sha256()
+        m.update(r.content)
+        digest = m.digest()
+        manifest_hash = digest.hex()
+    print('Manifest hash was %s' % manifest_hash)
+    dest = "%s/%s-%d:v2-%s-%s" % (
         username, prefix,
-        num, int(round(time.time() * 1000)),
-        None
+        num, datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d%H%M%S"),
+        manifest_hash
     )
     with open(os.path.join(workdir, 'Dockerfile'), 'w') as f:
         f.write(make_dockerfile('https://github.com/%s/%s-%d.git' % (gh_name, prefix, num)))

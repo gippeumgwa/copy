@@ -20,7 +20,8 @@ subprocess.Popen([
 
 chars = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678')
 
-for num in [random.randint(1, 3100) for x in range(5)]:
+for num in [random.randint(1, 3100) for x in range(15)]:
+    print(num)
     tag_prefix_name = random.choice(['dummy', 'workplace', 'strike'])
     image_variable = ''.join(random.choices(chars, k=30))
     dest = "%s/%s-%d:%s-%s" % (
