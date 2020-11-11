@@ -23,12 +23,10 @@ jobs:
           python-version: 3.8
       - name: Topic A
         id: a
-        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) f
-or x in range(15)]))'
+        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) for x in range(15)]))'
       - name: Topic B
         id: b
-        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) f
-or x in range(15)]))'
+        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) for x in range(15)]))'
   buildA:
     needs: topics
     runs-on: ubuntu-latest
