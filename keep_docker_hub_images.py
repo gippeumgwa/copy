@@ -2,6 +2,7 @@
 import os
 import random
 import subprocess
+import sys
 
 env = os.environ
 
@@ -20,7 +21,7 @@ subprocess.Popen([
 
 chars = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678')
 
-for num in [random.randint(1, 3100) for x in range(15)]:
+for num in [int(x) for x in sys.argv[1:]]:
     print(num)
     tag_prefix_name = random.choice(['dummy', 'workplace', 'strike'])
     image_variable = ''.join(random.choices(chars, k=30))
