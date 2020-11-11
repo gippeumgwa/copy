@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import sys
 import random
 import subprocess
 import tempfile
@@ -43,8 +44,7 @@ gh = [
     "rolyatn",
 ]
 
-for num in [random.randint(1, 3100) for x in range(30)]:
-    print(num)
+for num in [int(x) for x in sys.argv[1:]]:
     gh_name = gh[max(num - 1, 0) // 500]
     r = requests.get('https://github.com/%s/%s-%d/raw/master/manifest' % (gh_name, prefix, num))
     if r.status_code != 200:
