@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        number: ${{ fromJSON(needs.topics.topicA) }}
+        number: ${{ fromJSON(needs.topics.outputs.topicA) }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        number: ${{ fromJSON(needs.topics.topicB) }}
+        number: ${{ fromJSON(needs.topics.outputs.topicB) }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
