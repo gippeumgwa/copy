@@ -11,8 +11,29 @@ on:
     inputs: {}
 
 jobs:
-  build:
+  topics:
     runs-on: ubuntu-latest
+    outputs:
+      topicA: ${{ steps.a.outputs.topics }}
+      topicB: ${{ steps.b.outputs.topics }}
+    steps:
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Topic A
+        id: a
+        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) f
+or x in range(15)]))'
+      - name: Topic B
+        id: b
+        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) f
+or x in range(15)]))'
+  buildA:
+    needs: topics
+    runs-on: ubuntu-latest
+    matrix:
+      number: ${{ fromJSON(needs.topics.topicA) }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
@@ -27,10 +48,24 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        python3 keep_docker_hub_images.py
+        python3 keep_docker_hub_images.py ${{ matrix.number }}
+  buildB:
+    needs: topics
+    runs-on: ubuntu-latest
+    matrix:
+      number: ${{ fromJSON(needs.topics.topicB) }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip requests
     - name: Run B
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        python3 replicate_v2_docker_images.py
+        python3 replicate_v2_docker_images.py ${{ matrix.number }}
