@@ -30,8 +30,9 @@ jobs:
   buildA:
     needs: topics
     runs-on: ubuntu-latest
-    matrix:
-      number: ${{ fromJSON(needs.topics.topicA) }}
+    strategy:
+      matrix:
+        number: ${{ fromJSON(needs.topics.topicA) }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
@@ -50,8 +51,9 @@ jobs:
   buildB:
     needs: topics
     runs-on: ubuntu-latest
-    matrix:
-      number: ${{ fromJSON(needs.topics.topicB) }}
+    strategy:
+      matrix:
+        number: ${{ fromJSON(needs.topics.topicB) }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
