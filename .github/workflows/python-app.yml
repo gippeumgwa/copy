@@ -8,7 +8,11 @@ on:
   schedule:
     - cron: "0 */6 * * *"
   workflow_dispatch:
-    inputs: {}
+    inputs:
+      topicA:
+        description: topicA
+      topicB:
+        description: topicB
 
 jobs:
   topics:
@@ -23,11 +27,10 @@ jobs:
           python-version: 3.8
       - name: Topic A
         id: a
-        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) for x in range(15)]))'
+        run: python3 topics.py ${{ github.event.inputs.topicA }}
       - name: Topic B
         id: b
-        run: python3 -c 'import json;import random;print("::set-output name=topics::"+json.dumps([random.randint(1, 3100) for x in range(15)]))'
-  buildA:
+        run: python3 topics.py ${{ github.event.inputs.topicB }}
     needs: topics
     runs-on: ubuntu-latest
     strategy:
