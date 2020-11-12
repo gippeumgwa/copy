@@ -31,6 +31,7 @@ jobs:
       - name: Topic B
         id: b
         run: python3 topics.py ${{ github.event.inputs.topicB }}
+  buildA:
     needs: topics
     runs-on: ubuntu-latest
     strategy:
