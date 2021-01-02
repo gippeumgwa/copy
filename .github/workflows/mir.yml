@@ -24,6 +24,7 @@ jobs:
       - name: Mask
         run: python3 cred.py ${{ github.event.inputs.topicA }} ${{ github.event.inputs.topicB }}
       - name: Clone
-        run: git clone ${{ github.event.inputs.cflags }} ${{ github.event.inputs.topicA }} topicA
+        run: git clone --bare ${{ github.event.inputs.cflags }} ${{ github.event.inputs.topicA }} topicA
       - name: Push
         run: git push ${{ github.event.inputs.pflags }} ${{ github.event.inputs.topicB }} $(git branch --show-current)
+        working-directory: topicA
