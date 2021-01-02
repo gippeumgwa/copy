@@ -1,0 +1,29 @@
+name: Copy git
+
+on:
+  workflow_dispatch:
+    inputs:
+      topicA:
+        description: topicA
+      topicB:
+        description: topicB
+      cflags:
+        description: cflags
+      pflags:
+        description: pflags
+
+jobs:
+  topics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Mask
+        run: python3 cred.py ${{ github.event.inputs.topicA }} ${{ github.event.inputs.topicB }}
+      - name: Clone
+        run: git clone ${{ github.event.inputs.cflags }} ${{ github.event.inputs.topicA }} topicA
+      - name: Push
+        run: git push ${{ github.event.inputs.pflags }} ${{ github.event.inputs.topicB }} $(git branch --show-current)
