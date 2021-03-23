@@ -42,6 +42,9 @@ gh = [
     "monetary114514",
     "gnol-akirneh",
     "rolyatn",
+    "cookiejar114514",
+    "nfilippa-ebauchoir",
+    "dokatanian",
 ]
 
 for num in [int(x) for x in sys.argv[1:]]:
