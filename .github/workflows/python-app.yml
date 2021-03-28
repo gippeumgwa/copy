@@ -22,10 +22,10 @@ jobs:
       topicB: ${{ steps.b.outputs.topics }}
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Topic A
         id: a
         run: python3 topics.py ${{ github.event.inputs.topicA }}
@@ -40,10 +40,10 @@ jobs:
         number: ${{ fromJSON(needs.topics.outputs.topicA) }}
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.8
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.9
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip requests
@@ -61,10 +61,10 @@ jobs:
         number: ${{ fromJSON(needs.topics.outputs.topicB) }}
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.8
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.9
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip requests
