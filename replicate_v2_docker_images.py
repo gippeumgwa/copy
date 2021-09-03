@@ -46,6 +46,12 @@ gh = [
     "nfilippa-ebauchoir",
     "dokatanian",
     "yo3eexaiNg",
+    "ohYaiqu5ueno5daed8Sh",
+    "oshiezoy8ooy5Ohcojae",
+    "ohZaev5auVair6iong6a",
+    "uyooBai9thoh1AeX4tu7",
+    "rai7EeCohng2jeiliegh",
+    "ool1ja4UchoobonieT3i",
 ]
 
 for num in [int(x) for x in sys.argv[1:]]:
